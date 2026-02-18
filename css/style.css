@@ -89,11 +89,14 @@ nav a:hover {
     display: flex;
     align-items: center;
     padding-top: 120px;
-    background: linear-gradient(135deg,#001F3F 0%,#003366 50%,#0055A5 100%);
+    background:
+        linear-gradient(90deg, rgba(0,31,63,0.9) 0%, rgba(0,31,63,0.7) 40%, rgba(0,31,63,0.4) 70%, rgba(0,31,63,0.1) 100%),
+        url('../assets/hero-bg.png') center/cover no-repeat;
     position: relative;
     overflow: hidden;
     color: #ffffff;
 }
+
 
 .hero-overlay {
     position: absolute;
