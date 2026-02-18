@@ -97,6 +97,15 @@ nav a:hover {
     color: #ffffff;
 }
 
+.hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: url('../assets/hero-bg.png') center/cover no-repeat;
+    opacity: 0.25;
+    z-index: 0;
+}
+
 
 .hero-overlay {
     position: absolute;
@@ -106,8 +115,9 @@ nav a:hover {
 
 .hero-content {
     position: relative;
-    max-width: 700px;
+    z-index: 2;
 }
+
 
 .hero small {
     text-transform: uppercase;
