@@ -237,9 +237,20 @@ nav a:hover {
 .infra-card.active {
     opacity: 1;
     transform: scale(1);
-    box-shadow: 0 25px 60px rgba(0,0,0,0.15);
+    box-shadow:
+        0 30px 80px rgba(0,0,0,0.18),
+        0 10px 30px rgba(0,0,0,0.08);
     border-color: #0055A5;
 }
+
+.infra-track {
+    cursor: grab;
+}
+
+.infra-slider:active .infra-track {
+    cursor: grabbing;
+}
+
 
 /* картинка */
 .card-image {
@@ -277,9 +288,30 @@ nav a:hover {
 ====================== */
 
 .infrastructure {
-    padding: 140px 0;
     background: linear-gradient(to bottom,#ffffff,#f9fafb);
+    padding: 140px 0 200px 0; /* увеличили нижний отступ */
+    position: relative;
 }
+
+.infrastructure::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    height: 120px;
+
+    background: linear-gradient(
+        to bottom,
+        rgba(255,255,255,0) 0%,
+        #ffffff 100%
+    );
+
+    pointer-events: none;
+}
+
+
 
 .infrastructure h2 {
     font-size: 48px;
