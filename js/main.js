@@ -245,20 +245,31 @@ let current = 0;
 function renderSlide(index) {
   const data = solutionsData[index];
 
-  slide.innerHTML = `
-    <div class="solution-left">
-      <span class="solution-number">${data.number}</span>
-      <div class="solution-line"></div>
+  // АНИМАЦИЯ ВЫХОДА
+  slide.style.opacity = "0";
+  slide.style.transform = "translateY(20px)";
 
-      <h3>${data.title}</h3>
-      <p class="solution-desc">${data.desc}</p>
+  setTimeout(() => {
+    slide.innerHTML = `
+      <div class="solution-left">
+        <span class="solution-number">${data.number}</span>
+        <div class="solution-line"></div>
 
-      <ul>
-        ${data.list.map(item => `<li>${item}</li>`).join('')}
-      </ul>
-    </div>
-  `;
+        <h3>${data.title}</h3>
+        <p class="solution-desc">${data.desc}</p>
+
+        <ul>
+          ${data.list.map(item => `<li>${item}</li>`).join('')}
+        </ul>
+      </div>
+    `;
+
+    // АНИМАЦИЯ ВХОДА
+    slide.style.opacity = "1";
+    slide.style.transform = "translateY(0)";
+  }, 180);
 }
+
 
 nextBtn?.addEventListener('click', () => {
   current = (current + 1) % solutionsData.length;
