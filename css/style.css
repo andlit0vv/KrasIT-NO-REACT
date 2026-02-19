@@ -198,6 +198,19 @@ nav a:hover {
     transition: transform 0.4s ease;
 }
 
+.infra-slider,
+.infra-slider * {
+    user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+}
+
+.card-image img {
+    pointer-events: none;
+    user-drag: none;
+    -webkit-user-drag: none;
+}
+
 /* карточка */
 .infra-card {
     flex: 0 0 280px;
