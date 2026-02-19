@@ -201,7 +201,7 @@ nav a:hover {
 /* карточка */
 .infra-card {
     flex: 0 0 280px;
-    height: 180px;
+    height: 230px;
 
     background: #ffffff;
     border-radius: 24px;
