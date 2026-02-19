@@ -230,7 +230,6 @@ if (vsTrack && vsSlides.length) {
   btnDown?.addEventListener('click', next);
   btnUp?.addEventListener('click', prev);
 
-  /* колесо мыши */
   vsBox.addEventListener('wheel', (e) => {
     e.preventDefault();
 
