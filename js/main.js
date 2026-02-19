@@ -195,3 +195,46 @@ if (vsSection && vsTrack) {
   });
 }
 
+/* ======================
+   CENTERED VERTICAL SLIDER LOGIC
+====================== */
+
+const vsTrack = document.querySelector('.vs-track');
+const vsSlides = document.querySelectorAll('.vs-slide');
+const btnUp = document.querySelector('.vs-btn.up');
+const btnDown = document.querySelector('.vs-btn.down');
+const vsBox = document.querySelector('.vs-box');
+
+if (vsTrack && vsSlides.length) {
+  let index = 0;
+  const slideHeight = vsSlides[0].offsetHeight;
+
+  function updateSlider() {
+    vsTrack.style.transform = `translateY(-${index * slideHeight}px)`;
+  }
+
+  function next() {
+    if (index < vsSlides.length - 1) {
+      index++;
+      updateSlider();
+    }
+  }
+
+  function prev() {
+    if (index > 0) {
+      index--;
+      updateSlider();
+    }
+  }
+
+  btnDown?.addEventListener('click', next);
+  btnUp?.addEventListener('click', prev);
+
+  /* колесо мыши */
+  vsBox.addEventListener('wheel', (e) => {
+    e.preventDefault();
+
+    if (e.deltaY > 0) next();
+    else prev();
+  });
+}
