@@ -177,3 +177,96 @@ window.addEventListener('scroll', () => {
     header.classList.remove('scrolled');
   }
 });
+
+/* ======================
+   SOLUTION SLIDER (DATA SWITCH)
+====================== */
+
+const solutionsData = [
+  {
+    number: "1",
+    title: "ИНФРАСТРУКТУРА ЦОД",
+    desc: "Инженерная инфраструктура дата-центров",
+    list: [
+      "Вентиляция и кондиционирование",
+      "Электропитание и освещение",
+      "Кабельные системы",
+      "Инженерная безопасность"
+    ]
+  },
+  {
+    number: "2",
+    title: "СЛАБОТОЧНЫЕ СИСТЕМЫ",
+    desc: "Проектирование и обслуживание",
+    list: [
+      "Контроль доступа",
+      "Видеонаблюдение",
+      "Пожарная сигнализация",
+      "СКС и телефония"
+    ]
+  },
+  {
+    number: "3",
+    title: "ПРОТИВОПОЖАРНЫЕ СИСТЕМЫ",
+    desc: "Полный цикл внедрения",
+    list: [
+      "Пожарная сигнализация",
+      "Оповещение",
+      "Автоматика"
+    ]
+  },
+  {
+    number: "4",
+    title: "ВЕНТИЛЯЦИЯ И КОНДИЦИОНИРОВАНИЕ",
+    desc: "Системы климат-контроля",
+    list: [
+      "Вентиляция",
+      "Отопление",
+      "Сплит-системы"
+    ]
+  },
+  {
+    number: "5",
+    title: "ЭЛЕКТРОСНАБЖЕНИЕ",
+    desc: "Комплексные решения",
+    list: [
+      "Бесперебойное питание",
+      "Освещение",
+      "Заземление"
+    ]
+  }
+];
+
+const slide = document.querySelector('.solution-slide');
+const prevBtn = document.getElementById('sol-prev');
+const nextBtn = document.getElementById('sol-next');
+
+let current = 0;
+
+function renderSlide(index) {
+  const data = solutionsData[index];
+
+  slide.innerHTML = `
+    <div class="solution-left">
+      <span class="solution-number">${data.number}</span>
+      <div class="solution-line"></div>
+
+      <h3>${data.title}</h3>
+      <p class="solution-desc">${data.desc}</p>
+
+      <ul>
+        ${data.list.map(item => `<li>${item}</li>`).join('')}
+      </ul>
+    </div>
+  `;
+}
+
+nextBtn?.addEventListener('click', () => {
+  current = (current + 1) % solutionsData.length;
+  renderSlide(current);
+});
+
+prevBtn?.addEventListener('click', () => {
+  current = (current - 1 + solutionsData.length) % solutionsData.length;
+  renderSlide(current);
+});
