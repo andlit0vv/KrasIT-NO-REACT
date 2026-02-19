@@ -22,3 +22,32 @@ window.addEventListener('scroll', () => {
         header.classList.remove('scrolled');
     }
 });
+
+const infraTrack = document.querySelector('.infra-track');
+const infraCards = document.querySelectorAll('.infra-card');
+
+let currentIndex = 0;
+
+function updateSlider() {
+    const cardWidth = infraCards[0].offsetWidth + 30;
+
+    infraTrack.style.transform = `translateX(calc(50% - ${cardWidth / 2}px - ${currentIndex * cardWidth}px))`;
+
+    infraCards.forEach((card, i) => {
+        card.classList.toggle('active', i === currentIndex);
+    });
+}
+
+// автопрокрутка как у hellocharles
+function autoSlide() {
+    currentIndex++;
+    if (currentIndex >= infraCards.length) {
+        currentIndex = 0;
+    }
+    updateSlider();
+}
+
+setInterval(autoSlide, 2500);
+
+// init
+updateSlider();
