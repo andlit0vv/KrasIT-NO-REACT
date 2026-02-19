@@ -83,18 +83,18 @@ if (slider && trackInfra && cards.length > 0) {
     frame();
   }
 
-  function snapToClosest() {
-    const rawIndex =
-      -(currentTranslate - (slider.offsetWidth / 2 - cardWidth() / 2)) / cardWidth();
+function snapToClosest(delta = 0) {
+  if (delta < -50) currentIndex += 1;
+  else if (delta > 50) currentIndex -= 1;
 
-    currentIndex = Math.round(rawIndex);
-    currentIndex = Math.max(0, Math.min(cards.length - 1, currentIndex));
+  currentIndex = Math.max(0, Math.min(cards.length - 1, currentIndex));
 
-    const target = getCenteredTranslate(currentIndex);
+  const target = getCenteredTranslate(currentIndex);
 
-    updateActive();
-    animateTo(target);
-  }
+  updateActive();
+  animateTo(target);
+}
+
 
   /* ===== DRAG ===== */
 
@@ -124,19 +124,19 @@ if (slider && trackInfra && cards.length > 0) {
     setPosition(currentTranslate);
   });
 
-  window.addEventListener('mouseup', () => {
-    if (!isDragging) return;
+window.addEventListener('mouseup', (e) => {
+  if (!isDragging) return;
 
-    isDragging = false;
-    slider.style.cursor = 'grab';
+  isDragging = false;
+  slider.style.cursor = 'grab';
 
-    prevTranslate = currentTranslate;
+  const delta = e.clientX - startX;
 
-    // мягкая инерция
-    currentTranslate += velocity * 0.4;
+  prevTranslate = currentTranslate;
 
-    snapToClosest();
-  });
+  snapToClosest(delta);
+});
+
 
   /* ===== CLICK ===== */
 
