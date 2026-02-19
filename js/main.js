@@ -179,9 +179,6 @@ window.addEventListener('scroll', () => {
   }
 });
 
-/* ======================
-   VERTICAL SCROLL SLIDER
-====================== */
 
 const vsSection = document.querySelector('.vertical-solutions');
 const vsTrack = document.querySelector('.vs-track');
