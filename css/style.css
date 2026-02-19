@@ -196,7 +196,6 @@ nav a:hover {
 .infra-slider:active {
     cursor: grabbing;
 }
-
 .infra-track {
     display: flex;
     gap: 30px;
