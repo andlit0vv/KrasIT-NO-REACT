@@ -48,6 +48,5 @@ function autoSlide() {
 }
 
 setInterval(autoSlide, 2500);
-
 // init
 updateSlider();
