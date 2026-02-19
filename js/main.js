@@ -181,3 +181,23 @@ window.addEventListener('scroll', () => {
     header.classList.remove('scrolled');
   }
 });
+
+/* ======================
+   VERTICAL SCROLL SLIDER
+====================== */
+
+const vsSection = document.querySelector('.vertical-solutions');
+const vsTrack = document.querySelector('.vs-track');
+
+if (vsSection && vsTrack) {
+  window.addEventListener('scroll', () => {
+    const rect = vsSection.getBoundingClientRect();
+    const scrollProgress = -rect.top / (vsSection.offsetHeight - window.innerHeight);
+
+    const totalSlides = vsTrack.children.length;
+    const maxTranslate = (totalSlides - 1) * window.innerHeight;
+
+    vsTrack.style.transform = `translateY(-${scrollProgress * maxTranslate}px)`;
+  });
+}
+
