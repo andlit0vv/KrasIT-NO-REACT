@@ -1,7 +1,3 @@
-/* ======================
-   PARTNERS AUTO SLIDER
-====================== */
-
 const partnerTrack = document.getElementById("slider-track");
 
 if (partnerTrack) {
