@@ -1,3 +1,7 @@
+/* ======================
+   PARTNERS AUTO SLIDER
+====================== */
+
 const partnerTrack = document.getElementById("slider-track");
 
 if (partnerTrack) {
@@ -17,6 +21,7 @@ if (partnerTrack) {
   animatePartners();
 }
 
+
 /* ======================
    INFRA SLIDER (SMOOTH + FOCUS + CLICK)
 ====================== */
@@ -33,12 +38,9 @@ if (slider && trackInfra && cards.length > 0) {
   let startX = 0;
   let currentTranslate = 0;
   let prevTranslate = 0;
-  let velocity = 0;
   let animationID;
 
   const cardWidth = () => cards[0].offsetWidth + 30;
-
-  /* ===== POSITION ===== */
 
   function setPosition(translate) {
     trackInfra.style.transform = `translateX(${translate}px)`;
@@ -54,17 +56,13 @@ if (slider && trackInfra && cards.length > 0) {
     });
   }
 
-  /* ===== SMOOTH SNAP ===== */
-
   function animateTo(target) {
     cancelAnimationFrame(animationID);
 
     function frame() {
       const diff = target - currentTranslate;
 
-      // более мягкая анимация
       currentTranslate += diff * 0.08;
-
       setPosition(currentTranslate);
 
       if (Math.abs(diff) > 0.3) {
@@ -78,26 +76,22 @@ if (slider && trackInfra && cards.length > 0) {
     frame();
   }
 
-function snapToClosest(delta = 0) {
-  if (delta < -50) currentIndex += 1;
-  else if (delta > 50) currentIndex -= 1;
+  function snapToClosest(delta = 0) {
+    if (delta < -50) currentIndex += 1;
+    else if (delta > 50) currentIndex -= 1;
 
-  currentIndex = Math.max(0, Math.min(cards.length - 1, currentIndex));
+    currentIndex = Math.max(0, Math.min(cards.length - 1, currentIndex));
 
-  const target = getCenteredTranslate(currentIndex);
+    const target = getCenteredTranslate(currentIndex);
 
-  updateActive();
-  animateTo(target);
-}
-
-
-  /* ===== DRAG ===== */
+    updateActive();
+    animateTo(target);
+  }
 
   slider.addEventListener('mousedown', (e) => {
     isDragging = true;
     startX = e.clientX;
     slider.style.cursor = 'grabbing';
-    velocity = 0;
     cancelAnimationFrame(animationID);
   });
 
@@ -107,46 +101,36 @@ function snapToClosest(delta = 0) {
     const delta = e.clientX - startX;
     const next = prevTranslate + delta;
 
-    // мягкое сопротивление по краям
     if (next > 100 || next < -(cards.length * cardWidth())) {
       currentTranslate = next * 0.3;
     } else {
       currentTranslate = next;
     }
 
-    velocity = delta;
-
     setPosition(currentTranslate);
   });
 
-window.addEventListener('mouseup', (e) => {
-  if (!isDragging) return;
+  window.addEventListener('mouseup', (e) => {
+    if (!isDragging) return;
 
-  isDragging = false;
-  slider.style.cursor = 'grab';
+    isDragging = false;
+    slider.style.cursor = 'grab';
 
-  const delta = e.clientX - startX;
+    const delta = e.clientX - startX;
+    prevTranslate = currentTranslate;
 
-  prevTranslate = currentTranslate;
-
-  snapToClosest(delta);
-});
-
-
-  /* ===== CLICK ===== */
+    snapToClosest(delta);
+  });
 
   cards.forEach((card, index) => {
     card.addEventListener('click', () => {
       currentIndex = index;
-
       const target = getCenteredTranslate(currentIndex);
 
       updateActive();
       animateTo(target);
     });
   });
-
-  /* ===== INIT ===== */
 
   function init() {
     currentTranslate = getCenteredTranslate(currentIndex);
@@ -156,7 +140,6 @@ window.addEventListener('mouseup', (e) => {
   }
 
   window.addEventListener('resize', init);
-
   init();
 }
 
@@ -177,8 +160,9 @@ window.addEventListener('scroll', () => {
   }
 });
 
+
 /* ======================
-   SOLUTION SLIDER (DATA SWITCH)
+   SOLUTION SLIDER (SMOOTH VERSION)
 ====================== */
 
 const solutionsData = [
@@ -239,15 +223,18 @@ const solutionsData = [
 const slide = document.querySelector('.solution-slide');
 const prevBtn = document.getElementById('sol-prev');
 const nextBtn = document.getElementById('sol-next');
+const vsBox = document.querySelector('.solutions-slider');
 
 let current = 0;
+let isAnimating = false;
+
+const ANIMATION_TIME = 350;
 
 function renderSlide(index) {
   const data = solutionsData[index];
 
-  // АНИМАЦИЯ ВЫХОДА
   slide.style.opacity = "0";
-  slide.style.transform = "translateY(20px)";
+  slide.style.transform = "translateY(20px) scale(0.98)";
 
   setTimeout(() => {
     slide.innerHTML = `
@@ -264,19 +251,46 @@ function renderSlide(index) {
       </div>
     `;
 
-    // АНИМАЦИЯ ВХОДА
     slide.style.opacity = "1";
-    slide.style.transform = "translateY(0)";
-  }, 180);
+    slide.style.transform = "translateY(0) scale(1)";
+  }, 150);
 }
 
+function next() {
+  if (isAnimating) return;
+  isAnimating = true;
 
-nextBtn?.addEventListener('click', () => {
   current = (current + 1) % solutionsData.length;
   renderSlide(current);
-});
 
-prevBtn?.addEventListener('click', () => {
+  setTimeout(() => isAnimating = false, ANIMATION_TIME);
+}
+
+function prev() {
+  if (isAnimating) return;
+  isAnimating = true;
+
   current = (current - 1 + solutionsData.length) % solutionsData.length;
   renderSlide(current);
+
+  setTimeout(() => isAnimating = false, ANIMATION_TIME);
+}
+
+nextBtn?.addEventListener('click', next);
+prevBtn?.addEventListener('click', prev);
+
+let wheelTimeout;
+
+vsBox?.addEventListener('wheel', (e) => {
+  e.preventDefault();
+
+  clearTimeout(wheelTimeout);
+
+  wheelTimeout = setTimeout(() => {
+    if (e.deltaY > 0) next();
+    else prev();
+  }, 50);
 });
+
+/* INIT */
+renderSlide(current);
