@@ -23,7 +23,7 @@ if (partnerTrack) {
 
 
 /* ======================
-   INFRA SLIDER (SMOOTH + FOCUS)
+   INFRA SLIDER (SMOOTH + FOCUS + CLICK)
 ====================== */
 
 const slider = document.querySelector('.infra-slider');
@@ -67,11 +67,12 @@ if (slider && trackInfra && cards.length > 0) {
     function frame() {
       const diff = target - currentTranslate;
 
-      currentTranslate += diff * 0.12;
+      // более мягкая анимация
+      currentTranslate += diff * 0.08;
 
       setPosition(currentTranslate);
 
-      if (Math.abs(diff) > 0.5) {
+      if (Math.abs(diff) > 0.3) {
         animationID = requestAnimationFrame(frame);
       } else {
         currentTranslate = target;
@@ -111,7 +112,7 @@ if (slider && trackInfra && cards.length > 0) {
     const delta = e.clientX - startX;
     const next = prevTranslate + delta;
 
-    // сопротивление по краям
+    // мягкое сопротивление по краям
     if (next > 100 || next < -(cards.length * cardWidth())) {
       currentTranslate = next * 0.3;
     } else {
@@ -131,10 +132,23 @@ if (slider && trackInfra && cards.length > 0) {
 
     prevTranslate = currentTranslate;
 
-    // инерция
-    currentTranslate += velocity * 0.8;
+    // мягкая инерция
+    currentTranslate += velocity * 0.4;
 
     snapToClosest();
+  });
+
+  /* ===== CLICK ===== */
+
+  cards.forEach((card, index) => {
+    card.addEventListener('click', () => {
+      currentIndex = index;
+
+      const target = getCenteredTranslate(currentIndex);
+
+      updateActive();
+      animateTo(target);
+    });
   });
 
   /* ===== INIT ===== */
