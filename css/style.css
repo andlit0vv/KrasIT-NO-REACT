@@ -489,62 +489,112 @@ footer {
 }
 
 /* ======================
-   VERTICAL SLIDER
+   CENTERED VERTICAL SLIDER
 ====================== */
 
-.vertical-solutions {
-    height: 500vh;
-    background: linear-gradient(to bottom,#001F3F,#003366);
+.vs-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 120px 20px;
+    text-align: center;
 }
 
-.vs-wrapper {
-    position: sticky;
-    top: 0;
-    height: 100vh;
+.vs-title {
+    font-size: 42px;
+    margin-bottom: 60px;
+}
+
+/* главный блок */
+.vs-box {
+    position: relative;
+    margin: 0 auto;
+    width: 700px;
+    height: 500px;
+
+    border-radius: 32px;
+    border: 1px solid rgba(255,255,255,0.15);
+
+    background: rgba(255,255,255,0.04);
+    backdrop-filter: blur(10px);
+
+    overflow: hidden;
+
+    box-shadow:
+        0 40px 100px rgba(0,0,0,0.4),
+        inset 0 0 0 1px rgba(255,255,255,0.05);
+}
+
+/* slider */
+.vs-slider {
+    height: 100%;
     overflow: hidden;
 }
 
 .vs-track {
-    transition: transform 0.2s ease-out;
+    transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+/* слайд */
 .vs-slide {
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    padding: 0 80px;
-}
+    height: 500px;
+    padding: 60px;
+    text-align: left;
+    color: #fff;
 
-.vs-inner {
-    max-width: 900px;
-    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .vs-number {
     font-size: 48px;
     color: #3b82f6;
+    margin-bottom: 10px;
 }
 
-.vs-line {
-    width: 100%;
-    height: 2px;
-    background: #3b82f6;
-    margin: 10px 0 30px;
+.vs-slide h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
 }
 
-.vs-inner h3 {
-    font-size: 28px;
-    margin-bottom: 15px;
-}
-
-.vs-desc {
+.vs-slide p {
     color: #93c5fd;
     margin-bottom: 20px;
 }
 
-.vs-inner ul {
-    list-style: disc;
+.vs-slide ul {
     padding-left: 20px;
     line-height: 1.6;
 }
+
+/* кнопки */
+.vs-controls {
+    position: absolute;
+    right: -60px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.vs-btn {
+    width: 45px;
+    height: 45px;
+    border-radius: 12px;
+    border: none;
+
+    background: #ffffff;
+    color: #001F3F;
+
+    cursor: pointer;
+    font-size: 18px;
+
+    transition: 0.2s;
+}
+
+.vs-btn:hover {
+    transform: scale(1.1);
+}
+
 
