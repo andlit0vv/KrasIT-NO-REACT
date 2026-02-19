@@ -488,3 +488,96 @@ footer {
     color: #ffffff;
     padding: 80px 0;
 }
+
+/* ======================
+   SOLUTION SLIDER (NORMAL VERSION)
+====================== */
+
+.solutions-slider {
+    position: relative;
+    margin: 0 auto;
+    max-width: 1000px;
+}
+
+/* карточка */
+.solution-slide {
+    width: 100%;
+    min-height: 420px;
+
+    border-radius: 28px;
+    border: 1px solid rgba(255,255,255,0.15);
+
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(10px);
+
+    padding: 60px;
+
+    box-shadow:
+        0 40px 100px rgba(0,0,0,0.4);
+
+    transition: 0.4s;
+}
+
+/* внутрянка */
+.solution-left {
+    max-width: 700px;
+}
+
+.solution-number {
+    font-size: 48px;
+    color: #3b82f6;
+}
+
+.solution-line {
+    height: 2px;
+    width: 100%;
+    background: #3b82f6;
+    margin: 10px 0 25px;
+}
+
+.solution-slide h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.solution-desc {
+    color: #93c5fd;
+    margin-bottom: 20px;
+}
+
+.solution-slide ul {
+    padding-left: 20px;
+    line-height: 1.7;
+}
+
+/* кнопки справа */
+.solution-controls {
+    position: absolute;
+    right: -70px;
+    top: 50%;
+    transform: translateY(-50%);
+
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.solution-controls button {
+    width: 50px;
+    height: 50px;
+
+    border-radius: 14px;
+    border: none;
+
+    background: white;
+    color: #001F3F;
+
+    font-size: 18px;
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.solution-controls button:hover {
+    transform: scale(1.1);
+}
