@@ -17,7 +17,6 @@ if (partnerTrack) {
   animatePartners();
 }
 
-
 /* ======================
    INFRA SLIDER (SMOOTH + FOCUS + CLICK)
 ====================== */
