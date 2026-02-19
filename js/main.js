@@ -2,94 +2,153 @@
    PARTNERS AUTO SLIDER
 ====================== */
 
-const track = document.getElementById("slider-track");
-let position = 0;
+const partnerTrack = document.getElementById("slider-track");
 
-function animate() {
-  if (!track) return;
+if (partnerTrack) {
+  let position = 0;
 
-  position -= 0.5;
+  function animatePartners() {
+    position -= 0.5;
 
-  if (Math.abs(position) >= track.scrollWidth / 2) {
-    position = 0;
+    if (Math.abs(position) >= partnerTrack.scrollWidth / 2) {
+      position = 0;
+    }
+
+    partnerTrack.style.transform = `translateX(${position}px)`;
+    requestAnimationFrame(animatePartners);
   }
 
-  track.style.transform = `translateX(${position}px)`;
-  requestAnimationFrame(animate);
+  animatePartners();
 }
-
-animate();
 
 
 /* ======================
-   INFRA SLIDER (DRAG)
+   INFRA SLIDER (SMOOTH + FOCUS)
 ====================== */
 
 const slider = document.querySelector('.infra-slider');
-const infraTrack = document.querySelector('.infra-track');
+const trackInfra = document.querySelector('.infra-track');
 const cards = document.querySelectorAll('.infra-card');
 
-if (slider && infraTrack && cards.length > 0) {
+if (slider && trackInfra && cards.length > 0) {
 
   let currentIndex = Math.floor(cards.length / 2);
 
   let isDragging = false;
   let startX = 0;
   let currentTranslate = 0;
+  let prevTranslate = 0;
+  let velocity = 0;
+  let animationID;
 
-  function updateSlider() {
-    const cardWidth = cards[0].offsetWidth + 30;
+  const cardWidth = () => cards[0].offsetWidth + 30;
 
-    currentTranslate =
-      -currentIndex * cardWidth +
-      (slider.offsetWidth / 2 - cardWidth / 2);
+  /* ===== POSITION ===== */
 
-    infraTrack.style.transform = `translateX(${currentTranslate}px)`;
+  function setPosition(translate) {
+    trackInfra.style.transform = `translateX(${translate}px)`;
+  }
 
+  function getCenteredTranslate(index) {
+    return -index * cardWidth() + (slider.offsetWidth / 2 - cardWidth() / 2);
+  }
+
+  function updateActive() {
     cards.forEach((card, i) => {
       card.classList.toggle('active', i === currentIndex);
     });
   }
 
-  /* drag start */
+  /* ===== SMOOTH SNAP ===== */
+
+  function animateTo(target) {
+    cancelAnimationFrame(animationID);
+
+    function frame() {
+      const diff = target - currentTranslate;
+
+      currentTranslate += diff * 0.12;
+
+      setPosition(currentTranslate);
+
+      if (Math.abs(diff) > 0.5) {
+        animationID = requestAnimationFrame(frame);
+      } else {
+        currentTranslate = target;
+        setPosition(currentTranslate);
+      }
+    }
+
+    frame();
+  }
+
+  function snapToClosest() {
+    const rawIndex =
+      -(currentTranslate - (slider.offsetWidth / 2 - cardWidth() / 2)) / cardWidth();
+
+    currentIndex = Math.round(rawIndex);
+    currentIndex = Math.max(0, Math.min(cards.length - 1, currentIndex));
+
+    const target = getCenteredTranslate(currentIndex);
+
+    updateActive();
+    animateTo(target);
+  }
+
+  /* ===== DRAG ===== */
+
   slider.addEventListener('mousedown', (e) => {
     isDragging = true;
     startX = e.clientX;
     slider.style.cursor = 'grabbing';
+    velocity = 0;
+    cancelAnimationFrame(animationID);
   });
 
-  /* drag move */
   window.addEventListener('mousemove', (e) => {
     if (!isDragging) return;
 
     const delta = e.clientX - startX;
+    const next = prevTranslate + delta;
 
-    infraTrack.style.transform = `translateX(${currentTranslate + delta}px)`;
+    // сопротивление по краям
+    if (next > 100 || next < -(cards.length * cardWidth())) {
+      currentTranslate = next * 0.3;
+    } else {
+      currentTranslate = next;
+    }
+
+    velocity = delta;
+
+    setPosition(currentTranslate);
   });
 
-  /* drag end */
-  window.addEventListener('mouseup', (e) => {
+  window.addEventListener('mouseup', () => {
     if (!isDragging) return;
 
     isDragging = false;
     slider.style.cursor = 'grab';
 
-    const delta = e.clientX - startX;
-    const cardWidth = cards[0].offsetWidth + 30;
+    prevTranslate = currentTranslate;
 
-    if (delta < -50) currentIndex++;
-    if (delta > 50) currentIndex--;
+    // инерция
+    currentTranslate += velocity * 0.8;
 
-    currentIndex = Math.max(0, Math.min(cards.length - 1, currentIndex));
-
-    updateSlider();
+    snapToClosest();
   });
 
-  /* адаптация при ресайзе */
-  window.addEventListener('resize', updateSlider);
+  /* ===== INIT ===== */
 
-  /* init */
-  updateSlider();
+  function init() {
+    currentTranslate = getCenteredTranslate(currentIndex);
+    prevTranslate = currentTranslate;
+    setPosition(currentTranslate);
+    updateActive();
+  }
+
+  window.addEventListener('resize', init);
+
+  init();
 }
 
 
