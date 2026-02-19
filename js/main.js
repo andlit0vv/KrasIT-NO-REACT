@@ -38,7 +38,6 @@ function updateSlider() {
     });
 }
 
-// автопрокрутка как у hellocharles
 function autoSlide() {
     currentIndex++;
     if (currentIndex >= infraCards.length) {
