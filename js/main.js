@@ -9,9 +9,7 @@ function animate() {
   track.style.transform = `translateX(${position}px)`;
   requestAnimationFrame(animate);
 }
-
 animate();
-
 // Header shadow on scroll
 const header = document.querySelector('header');
 
