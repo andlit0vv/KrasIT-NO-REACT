@@ -51,6 +51,12 @@ header.scrolled {
     color: #0055A5;
 }
 
+.logo img {
+    height: 32px;
+    display: block;
+}
+
+
 nav {
     display: flex;
     gap: 50px;
