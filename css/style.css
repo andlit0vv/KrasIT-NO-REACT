@@ -197,7 +197,6 @@ nav a:hover {
     will-change: transform;
 }
 
-/* карточки */
 .infra-card {
     flex: 0 0 420px;
     height: 260px;
@@ -218,7 +217,6 @@ nav a:hover {
     transform: scale(0.9);
 }
 
-/* активная карточка (центр) */
 .infra-card.active {
     opacity: 1;
     transform: scale(1);
