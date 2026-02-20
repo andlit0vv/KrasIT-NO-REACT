@@ -1,3 +1,4 @@
+кирюха серф алиэкспресс, [2/20/2026 2:13 PM]
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -10,13 +11,15 @@
 </head>
 <body>
 
+    <!-- ШАПКА С БУРГЕР-МЕНЮ (АДАПТИРОВАНА) -->
     <header class="header">
         <div class="container header-inner">
 
             <a href="https://andlit0vv.github.io/KrasIT-NO-REACT/" class="logo">
-                <img src="assets/logos/logo_kit.svg" alt="">
+                <img src="assets/logos/logo_kit.svg" alt="Красноярск ИТ">
             </a>
 
+            <!-- Десктопная навигация -->
             <nav class="nav">
                 <a href="#главная">Главная</a>
                 <a href="#решения">Решения</a>
@@ -25,50 +28,55 @@
                 <a href="#контакты">Контакты</a>
             </nav>
 
+            <!-- Телефон для десктопа -->
+            <a href="tel:+73912001215" class="phone">+7 (391) 200-12-15</a>
+
+            <!-- Бургер-кнопка (только на мобильных) -->
+            <div class="burger" id="burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+
+        </div>
+
+        <!-- Мобильное меню (выезжает справа) -->
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="#главная">Главная</a>
+            <a href="#решения">Решения</a>
+            <a href="#проекты">Проекты</a>
+            <a href="#партнеры">Партнеры</a>
+            <a href="#контакты">Контакты</a>
             <a href="tel:+73912001215" class="phone">+7 (391) 200-12-15</a>
         </div>
+
+        <!-- Затемнение фона при открытом меню -->
+        <div class="overlay" id="overlay"></div>
     </header>
 
+    <!-- ОСТАЛЬНОЙ КОНТЕНТ (БЕЗ ИЗМЕНЕНИЙ) -->
     <section id="главная" class="hero">
         <div class="hero-overlay"></div>
-
         <div class="container hero-content">
             <div class="hero-top">
                 <span class="hero-tag">ПРОФЕССИОНАЛЬНЫЕ IT РЕШЕНИЯ</span>
             </div>
-
-            <h1>ООО "Красноярск ИТ"</h1>
-
-            <p class="hero-desc">
-                Создаем комплексные решения для государственных и корпоративных клиентов
-            </p>
-
+            <h1>Красноярск  ИТ</h1>
+            <p class="hero-desc">Создаем комплексные решения для государственных и корпоративных клиентов</p>
             <div class="hero-contacts">
                 <div class="hero-contact">
-                    <div class="hero-icon">
-                        <img src="assets/icons/mail.png" alt="">
-                    </div>
-                    <div>
-                        <span>Email</span>
-                        <p>office@kras-it.ru</p>
-                    </div>
+                    <div class="hero-icon"><img src="assets/icons/mail.png" alt=""></div>
+                    <div><span>Email</span><p>office@kras-it.ru</p></div>
                 </div>
-
                 <div class="hero-contact">
-                    <div class="hero-icon">
-                        <img src="assets/icons/phone.png" alt="">
-                    </div>
-                    <div>
-                        <span>Телефон</span>
-                        <p>+7 (391) 200-12-15</p>
-                    </div>
+                    <div class="hero-icon"><img src="assets/icons/phone.png" alt=""></div>
+                    <div><span>Телефон</span><p>+7 (391) 200-12-15</p></div>
                 </div>
             </div>
-
-            <button class="btn-primary hero-btn">
+            <a href="#контакты" class="btn-primary hero-btn">
                 <span>Обсудить проект</span>
                 <div class="btn-arrow">→</div>
-            </button>
+            </a>
         </div>
     </section>
 
@@ -84,50 +92,23 @@
     <section id="infrastructure" class="infrastructure">
         <div class="container">
             <h2>ОБЪЕКТЫ ИНЖЕНЕРНОЙ ИНФРАСТРУКТУРЫ</h2>
-            <p class="section-desc">
-                создаем и обеспечиваем надежную работу инфраструктуры зданий и сооружений
-            </p>
-
+            <p class="section-desc">создаем и обеспечиваем надежную работу инфраструктуры зданий и сооружений</p>
             <div class="infra-slider">
-                <div class="infra-track">
-
-                    <div class="infra-card">
-                        <div class="card-image"><img src="assets/objects/prom.png" alt=""></div>
-                        <h3>Промышленные объекты</h3>
-                        <p>Производственные комплексы</p>
+                <div class="infra-wrapper">
+                    <div class="infra-track">
+                        <div class="infra-card"><div class="card-image"><img src="assets/objects/prom.png" alt=""></div><h3>Промышленные объекты</h3><p>Производственные комплексы</p></div>
+                        <div class="infra-card">
+                            <div class="card-image">
+                                <img src="assets/objects/sport.png" alt="">
+                            </div><h3>Спортивные объекты</h3><p>Стадионы и комплексы</p>
+                        </div>
+                        <div class="infra-card"><div class="card-image"><img src="assets/objects/data_center.png" alt=""></div><h3>ЦОД</h3><p>Дата-центры и серверные</p></div>
+                        <div class="infra-card"><div class="card-image"><img src="assets/objects/transport.png" alt=""></div><h3>Транспортная инфраструктура</h3><p>Узлы и системы управления</p></div>
+                        <div class="infra-card"><div class="card-image"><img src="assets/objects/logistics.png" alt=""></div><h3>Логистические центры</h3><p>Склады и распределение</p></div>
+                        <div class="infra-card"><div class="card-image"><img src="assets/objects/medical.png" alt=""></div><h3>Мед. и учебные учреждения</h3><p>Больницы, школы, объекты соцсфер</p></div>
                     </div>
-
-                    <div class="infra-card">
-                        <div class="card-image"><img src="assets/objects/sport.png" alt=""></div>
-                        <h3>Спортивные объекты</h3>
-                        <p>Стадионы и комплексы</p>
-                    </div>
-
-                    <div class="infra-card">
-                        <div class="card-image"><img src="assets/objects/data_center.png" alt=""></div>
-                        <h3>ЦОД</h3>
-                        <p>Дата-центры и серверные</p>
-                    </div>
-
-                    <div class="infra-card">
-                        <div class="card-image"><img src="assets/objects/transport.png" alt=""></div>
-                        <h3>Транспортная инфраструктура</h3>
-                        <p>Узлы и системы управления</p>
-                    </div>
-
-                    <div class="infra-card">
-                        <div class="card-image"><img src="assets/objects/logistics.png" alt=""></div>
-                        <h3>Логистические центры</h3>
-                        <p>Склады и распределение</p>
-                    </div>
-
-                    <div class="infra-card">
-                        <div class="card-image"><img src="assets/objects/medical.png" alt=""></div>
-                        <h3>Мед. и учебные учреждения</h3>
-                        <p>Больницы, школы, объекты соцсфер</p>
-                    </div>
-
                 </div>
+                
             </div>
         </div>
     </section>
@@ -135,29 +116,21 @@
     <section id="решения" class="solutions">
         <div class="container">
             <h2>РЕАЛИЗУЕМЫЕ ИНЖЕНЕРНЫЕ РЕШЕНИЯ</h2>
-
             <div class="solutions-slider">
                 <div class="solution-slide">
                     <div class="solution-left">
                         <span class="solution-number">1</span>
                         <div class="solution-line"></div>
-
                         <h3>ИНФРАСТРУКТУРА ЦОД</h3>
-
-                        <p class="solution-desc">
-                            Построение и поддержка инженерной инфраструктуры центров обработки данных
-                        </p>
-
+                        <p class="solution-desc">Инженерная инфраструктура дата-центров</p>
                         <ul>
-                            <li>Системы вентиляции и кондиционирования</li>
+                            <li>Вентиляция и кондиционирование</li>
                             <li>Электропитание и освещение</li>
-                            <li>Системы электроснабжения</li>
                             <li>Кабельные системы</li>
                             <li>Инженерная безопасность</li>
                         </ul>
                     </div>
                 </div>
-
                 <div class="solution-controls">
                     <button id="sol-prev">↑</button>
                     <button id="sol-next">↓</button>
@@ -166,216 +139,86 @@
         </div>
     </section>
 
-
-
     <section id="проекты" class="projects">
         <div class="container">
             <h2>РЕАЛИЗОВАННЫЕ ПРОЕКТЫ</h2>
             <div class="projects-grid">
-
                 <!-- 1 -->
                 <div class="project-card" style="background-image: url('assets/projects/universiada.jpeg')">
                     <div class="project-overlay"></div>
-
-                    <div class="project-main">
-                        <h3>ЗИМНЯЯ УНИВЕРСИАДА 2019</h3>
-                        <button class="project-toggle">Подробнее ↓</button>
-                    </div>
-
-                    <div class="project-content">
-                        <ul>
-                            <li>СКС: более 1000 портов, 500+ коммутаторов, 150 ИБП</li>
-                            <li>1700+ камер видеонаблюдения на 15 объектах</li>
-                            <li>4500+ систем безопасности и пожарной защиты</li>
-                            <li>1400+ Wi-Fi точек, единая бесшовная сеть</li>
-                            <li>2000+ единиц техники на 47 объектах</li>
-                            <li>450 км линий связи, СПД, СКУД, освещение</li>
-                        </ul>
-                    </div>
+                    <div class="project-main"><h3>ЗИМНЯЯ УНИВЕРСИАДА 2019</h3><button class="project-toggle">Подробнее ↓</button></div>
+                    <div class="project-content"><ul><li>СКС: более 1000 портов, 500+ коммутаторов, 150 ИБП</li><li>1700+ камер видеонаблюдения на 15 объектах</li><li>4500+ систем безопасности и пожарной защиты</li><li>1400+ Wi-Fi точек, единая бесшовная сеть</li><li>2000+ единиц техники на 47 объектах</li><li>450 км линий связи, СПД, СКУД, освещение</li></ul></div>
                 </div>
-
                 <!-- 2 -->
                 <div class="project-card" style="background-image: url('assets/projects/dom_sporta.png')">
                     <div class="project-overlay"></div>
-
-                    <div class="project-main">
-                        <h3>ДОМ СПОРТА ИМ. МИХАИЛА ДВОРКИНА</h3>
-                        <button class="project-toggle">Подробнее ↓</button>
-                    </div>
-
-                    <div class="project-content">
-                        <ul>
-                            <li>200+ единиц IT и телеком-оборудования</li>
-                            <li>80+ камер + сервер аналитики SecurOS</li>
-                            <li>25+ Wi-Fi точек, единая сеть передачи данных</li>
-                            <li>СКУД и системы безопасности 24/7</li>
-                        </ul>
-                    </div>
+                    <div class="project-main"><h3>ДОМ СПОРТА ИМ. МИХАИЛА ДВОРКИНА</h3><button class="project-toggle">Подробнее ↓</button></div>
+                    <div class="project-content"><ul><li>200+ единиц IT и телеком-оборудования</li><li>80+ камер + сервер аналитики SecurOS</li><li>25+ Wi-Fi точек, единая сеть передачи данных</li><li>СКУД и системы безопасности 24/7</li></ul></div>
                 </div>
-
                 <!-- 3 -->
                 <div class="project-card" style="background-image: url('assets/projects/metro.png')">
                     <div class="project-overlay"></div>
-
-                    <div class="project-main">
-                        <h3>БТС-МОСТ (МЕТРО КРАСНОЯРСК)</h3>
-                        <button class="project-toggle">Подробнее ↓</button>
-                    </div>
-
-                    <div class="project-content">
-                        <ul>
-                            <li>Проектирование СКС, видеонаблюдения и СКУД</li>
-                            <li>Монтаж систем контроля на объектах строительства</li>
-                            <li>Единая сеть передачи данных и Wi-Fi инфраструктура</li>
-                            <li>Поставка и обслуживание IT и инженерных систем</li>
-                        </ul>
-                    </div>
+                    <div class="project-main"><h3>БТС-МОСТ (МЕТРО КРАСНОЯРСК)</h3><button class="project-toggle">Подробнее ↓</button></div>
+                    <div class="project-content"><ul><li>Проектирование СКС, видеонаблюдения и СКУД</li><li>Монтаж систем контроля на объектах строительства</li><li>Единая сеть передачи данных и Wi-Fi инфраструктура</li><li>Поставка и обслуживание IT и инженерных систем</li></ul></div>
                 </div>
-
                 <!-- 4 -->
                 <div class="project-card" style="background-image: url('assets/projects/mfc.jpg')">
                     <div class="project-overlay"></div>
-
-                    <div class="project-main">
-                        <h3>МФЦ ЛУГАНСКОЙ ОБЛАСТИ</h3>
-                        <button class="project-toggle">Подробнее ↓</button>
-                    </div>
-
-                    <div class="project-content">
-                        <ul>
-                            <li>Проектирование и обследование объекта</li>
-                            <li>СКС, коммутаторы, ИБП, запуск систем</li>
-                            <li>Видеонаблюдение и системы безопасности</li>
-                            <li>Единая сеть передачи данных</li>
-                            <li>Поставка и обслуживание оборудования и ПО</li>
-                        </ul>
-                    </div>
+                    <div class="project-main"><h3>МФЦ ЛУГАНСКОЙ ОБЛАСТИ</h3><button class="project-toggle">Подробнее ↓</button></div>
+                    <div class="project-content"><ul><li>Проектирование и обследование объекта</li><li>СКС, коммутаторы, ИБП, запуск систем</li><li>Видеонаблюдение и системы безопасности</li><li>Единая сеть передачи данных</li><li>Поставка и обслуживание оборудования и ПО</li></ul></div>
                 </div>
-
             </div>
         </div>
     </section>
 
     <section id="партнеры" class="partners">
         <div class="container">
-
             <h2>КЛЮЧЕВЫЕ ПАРТНЕРЫ</h2>
-
             <div class="slider">
                 <div class="slider-mask">
                     <div class="slider-track" id="slider-track">
-
-                        <div class="partner"><img src="assets/partners/dell.png" alt=""></div>
-                        <div class="partner"><img src="assets/partners/dell.png" alt=""></div>
-                        <div class="partner"><img src="assets/partners/cisco.png" alt=""></div>
-                        <div class="partner"><img src="assets/partners/kaspersky.png" alt=""></div>
-                        <div class="partner"><img src="assets/partners/huawei.png" alt=""></div>
-                        <div class="partner"><img src="assets/partners/lenovo.png" alt=""></div>
-
-                        <!-- дубли (обязательно для бесконечного скролла) -->
-                        <div class="partner"><img src="assets/partners/hp.png" alt=""></div>
-                        <div class="partner"><img src="assets/partners/dell.png" alt=""></div>
-                        <div class="partner"><img src="assets/partners/cisco.png" alt=""></div>
-                        <div class="partner"><img src="assets/partners/kaspersky.png" alt=""></div>
-                        <div class="partner"><img src="assets/partners/huawei.png" alt=""></div>
-                        <div class="partner"><img src="assets/partners/lenovo.png" alt=""></div>
-
+                        <div class="partner"><img src="assets/partners/Dell.png" alt=""></div>
+                        <div class="partner"><img src="assets/partners/Adhua.png" alt=""></div>
+                        <div class="partner"><img src="assets/partners/Huawei.png" alt=""></div>
+                        <div class="partner"><img src="assets/partners/Kaspersky.png" alt=""></div>
+                        <div class="partner"><img src="assets/partners/Security_code.png" alt=""></div>
+                        <div class="partner"><img src="assets/partners/Tiandy.png" alt=""></div>
+                        <!-- дубли -->
+                        <div class="partner"><img src="assets/partners/Dell.png" alt=""></div>
+                        <div class="partner"><img src="assets/partners/Adhua.png" alt=""></div>
+                        <div class="partner"><img src="assets/partners/Huawei.png" alt=""></div>
+                        <div class="partner"><img src="assets/partners/Kaspersky.png" alt=""></div>
+                        <div class="partner"><img src="assets/partners/Security_code.png" alt=""></div>
+                        <div class="partner"><img src="assets/partners/Tiandy.png" alt=""></div>
                     </div>
                 </div>
             </div>
-
         </div>
     </section>
 
     <section id="контакты" class="contacts">
         <div class="container">
-
             <h2>КОНТАКТЫ</h2>
-
             <div class="contacts-grid">
-
-                <!-- ЛЕВАЯ ЧАСТЬ -->
                 <div class="contacts-info">
-
-                    <div class="contact-item">
-                        <div class="contact-icon">
-                            <img src="assets/icons/phone.png" alt="">
-                        </div>
-                        <div>
-                            <span class="contact-label">ТЕЛЕФОН</span>
-                            <p>+7 (391) 200-12-15</p>
-                        </div>
-                    </div>
-
-                    <div class="contact-item">
-                        <div class="contact-icon">
-                            <img src="assets/icons/mail.png" alt="">
-                        </div>
-                        <div>
-                            <span class="contact-label">ЭЛЕКТРОННАЯ ПОЧТА</span>
-                            <p>office@kras-it.ru</p>
-                        </div>
-                    </div>
-
-                    <div class="contact-item">
-                        <div class="contact-icon">
-                            <img src="assets/icons/address.png" alt="">
-                        </div>
-                        <div>
-                            <span class="contact-label">НАШ АДРЕС</span>
-                            <p>Красноярск, ул. Ады Лебедевой, д. 18<br>пом. 54</p>
-                        </div>
-                    </div>
-
+                    <div class="contact-item"><div class="contact-icon"><img src="assets/icons/phone.png" alt=""></div><div><span class="contact-label">ТЕЛЕФОН</span><p>+7 (391) 200-12-15</p></div></div>
+                    <div class="contact-item"><div class="contact-icon"><img src="assets/icons/mail.png" alt=""></div><div><span class="contact-label">ЭЛЕКТРОННАЯ ПОЧТА</span><p>office@kras-it.ru</p></div></div>
+                    <div class="contact-item"><div class="contact-icon"><img src="assets/icons/address.png" alt=""></div><div><span class="contact-label">НАШ АДРЕС</span><p>Красноярск, ул. Ады Лебедевой, д. 18<br>пом. 54</p></div></div>
                 </div>
-
-                <!-- ПРАВАЯ ЧАСТЬ (КАРТА) -->
                 <div class="contacts-map">
-                    <iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3A3b85a8624f169d05158f9b84733f766febee275fdce54564a4000e4a87d6cd68&source=constructor"
-                            frameborder="0"
-                            allowfullscreen="true">
-                    </iframe>
+                    <iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3A3b85a8624f169d05158f9b84733f766febee275fdce54564a4000e4a87d6cd68&source=constructor" frameborder="0" allowfullscreen="true"></iframe>
                 </div>
-
             </div>
-
         </div>
     </section>
 
     <footer class="footer">
         <div class="container footer-grid">
-
-            <!-- ЛОГО -->
-            <div class="footer-brand">
-                <img src="assets/logos/logo_kit_white.svg" alt="КИТ">
-                <p>ООО "Красноярск ИТ"</p>
-            </div>
-
-            <!-- МЕНЮ -->
-            <div class="footer-menu">
-                <h4>МЕНЮ</h4>
-                <div class="footer-links">
-                    <a href="#главная">Главная</a>
-                    <a href="#решения">Решения</a>
-                    <a href="#проекты">Проекты</a>
-                    <a href="#партнеры">Партнеры</a>
-                    <a href="#контакты">Контакты</a>
-                </div>
-            </div>
-
-            <!-- КОНТАКТЫ -->
-            <div class="footer-contacts">
-                <h4>НАШ АДРЕС:</h4>
-                <p>Красноярск, ул. Ады Лебедевой, д. 18 пом. 54</p>
-                <p>Телефон: +7 (391) 200-12-15</p>
-                <p>Электронная почта: office@kras-it.ru</p>
-            </div>
-
+            <div class="footer-brand"><img src="assets/logos/logo_kit_white.svg" alt="КИТ"><p>ООО "Красноярск ИТ"</p></div>
+            <div class="footer-menu"><h4>МЕНЮ</h4><div class="footer-links"><a href="#главная">Главная</a><a href="#решения">Решения</a><a href="#проекты">Проекты</a><a href="#партнеры">Партнеры</a><a href="#контакты">Контакты</a></div></div>
+            <div class="footer-contacts"><h4>НАШ АДРЕС:</h4><p>Красноярск, ул. Ады Лебедевой, д. 18 пом. 54</p><p>Телефон: +7 (391) 200-12-15</p><p>Электронная почта: office@kras-it.ru</p></div>
         </div>
-
-        <div class="footer-bottom">
-            © 2026 ООО "Красноярск ИТ". Все права защищены.
-        </div>
+        <div class="footer-bottom">© 2026 ООО "Красноярск ИТ". Все права защищены.</div>
     </footer>
 
     <script src="js/main.js"></script>
