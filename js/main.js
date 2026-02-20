@@ -1,7 +1,3 @@
-/* ======================
-   PARTNERS AUTO SLIDER (UPGRADE)
-====================== */
-
 const partnerTrack = document.getElementById("slider-track");
 const partners = document.querySelectorAll(".partner");
 
