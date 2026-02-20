@@ -1,4 +1,3 @@
-
 @import './fonts.css';
 
 * {
@@ -1293,7 +1292,9 @@ nav {
     .container {
         padding: 0 16px;
     }
-
+    .hero {
+    min-height: 600px;
+    }
     .hero-contacts {
         flex-wrap: nowrap; /* запрещаем перенос */
         justify-content: center;
