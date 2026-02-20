@@ -2,7 +2,6 @@ const partnerTrack = document.getElementById("slider-track");
 const partners = document.querySelectorAll(".partner");
 
 if (partnerTrack && partners.length > 0) {
-
   let position = 0;
 
   function updateActivePartner() {
