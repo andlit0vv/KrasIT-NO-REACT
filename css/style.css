@@ -99,7 +99,7 @@ nav a:hover {
     content: "";
     position: absolute;
     inset: 0;
-    background: url('../assets/hero-bg.gif') center/cover no-repeat;
+    background: url('../assets/bg/hero-bg.gif') center/cover no-repeat;
     opacity: 0.25;
     z-index: 0;
 }
