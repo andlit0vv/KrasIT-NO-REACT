@@ -1,25 +1,16 @@
+/* ======================
+   PARTNERS AUTO SLIDER (UPGRADE)
+====================== */
+
 const partnerTrack = document.getElementById("slider-track");
 const partners = document.querySelectorAll(".partner");
 
 if (partnerTrack && partners.length > 0) {
+
   let position = 0;
 
-  function updateActivePartner() {
-    const center = window.innerWidth / 2;
-
-    partners.forEach(el => {
-      const rect = el.getBoundingClientRect();
-      const elCenter = rect.left + rect.width / 2;
-
-      const dist = Math.abs(center - elCenter);
-
-      if (dist < 80) {
-        el.classList.add("active");
-      } else {
-        el.classList.remove("active");
-      }
-    });
-  }
+  
+  
 
   function animatePartners() {
     position -= 0.5;
@@ -30,7 +21,6 @@ if (partnerTrack && partners.length > 0) {
 
     partnerTrack.style.transform = `translateX(${position}px)`;
 
-    updateActivePartner();
 
     requestAnimationFrame(animatePartners);
   }
@@ -200,3 +190,119 @@ document.querySelectorAll('.project-card').forEach(card => {
     card.classList.toggle('active');
   });
 });
+
+
+/* ======================
+   BURGER MENU
+====================== */
+
+const burger = document.getElementById('burger');
+const mobileMenu = document.getElementById('mobileMenu');
+const overlay = document.getElementById('overlay');
+
+function openMenu() {
+  burger.classList.add('active');
+  mobileMenu.classList.add('active');
+  overlay.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeMenu() {
+  burger.classList.remove('active');
+  mobileMenu.classList.remove('active');
+  overlay.classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+burger?.addEventListener('click', () => {
+  if (mobileMenu.classList.contains('active')) {
+    closeMenu();
+  } else {
+    openMenu();
+  }
+});
+
+overlay?.addEventListener('click', closeMenu);
+
+/* ======================
+   INFRA CENTER SLIDER (LOOP)
+====================== */
+
+const infraTrack = document.querySelector('.infra-track');
+
+if (infraTrack && window.innerWidth <= 600) {
+
+  let cards = Array.from(document.querySelectorAll('.infra-card'));
+
+  // 🔁 клонируем первый и последний для бесконечного эффекта
+  const firstClone = cards[0].cloneNode(true);
+  const lastClone = cards[cards.length - 1].cloneNode(true);
+
+  infraTrack.appendChild(firstClone);
+  infraTrack.insertBefore(lastClone, cards[0]);
+
+  cards = document.querySelectorAll('.infra-card');
+
+  let currentIndex = 1; // старт с первой "реальной"
+  let isAnimating = false;
+
+  function updateSlider(animate = true) {
+    const cardWidth = cards[0].offsetWidth + 20;
+
+    if (!animate) {
+      infraTrack.style.transition = 'none';
+    } else {
+      infraTrack.style.transition = 'transform 0.4s ease';
+    }
+
+    infraTrack.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
+
+    // active класс
+    cards.forEach(c => c.classList.remove('active'));
+    cards[currentIndex].classList.add('active');
+  }
+
+  // swipe
+  let startX = 0;
+  let currentX = 0;
+
+  infraTrack.addEventListener('touchstart', (e) => {
+    startX = e.touches[0].clientX;
+  });
+
+  infraTrack.addEventListener('touchmove', (e) => {
+    currentX = e.touches[0].clientX;
+  });
+
+  infraTrack.addEventListener('touchend', () => {
+    const diff = startX - currentX;
+
+    if (Math.abs(diff) < 40) return;
+
+    if (diff > 0) {
+      currentIndex++;
+    } else {
+      currentIndex--;
+    }
+
+    updateSlider(true);
+
+    // 🔁 loop фиксация
+    setTimeout(() => {
+      if (currentIndex === cards.length - 1) {
+        currentIndex = 1;
+        updateSlider(false);
+      }
+
+      if (currentIndex === 0) {
+        currentIndex = cards.length - 2;
+        updateSlider(false);
+      }
+    }, 400);
+  });
+
+  // init
+  updateSlider(false);
+
+  window.addEventListener('resize', () => updateSlider(false));
+}
