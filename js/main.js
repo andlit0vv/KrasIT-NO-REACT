@@ -1,16 +1,12 @@
 /* ======================
-   PARTNERS AUTO SLIDER (UPGRADE)
+   PARTNERS AUTO SLIDER
 ====================== */
 
 const partnerTrack = document.getElementById("slider-track");
 const partners = document.querySelectorAll(".partner");
 
 if (partnerTrack && partners.length > 0) {
-
   let position = 0;
-
-  
-  
 
   function animatePartners() {
     position -= 0.5;
@@ -20,15 +16,11 @@ if (partnerTrack && partners.length > 0) {
     }
 
     partnerTrack.style.transform = `translateX(${position}px)`;
-
-
     requestAnimationFrame(animatePartners);
   }
 
   animatePartners();
 }
-
-
 
 /* ======================
    HEADER SCROLL EFFECT
@@ -46,9 +38,8 @@ window.addEventListener('scroll', () => {
   }
 });
 
-
 /* ======================
-   SOLUTION SLIDER (SMOOTH VERSION)
+   SOLUTION SLIDER
 ====================== */
 
 const solutionsData = [
@@ -181,7 +172,9 @@ vsBox?.addEventListener('wheel', (e) => {
 /* INIT */
 renderSlide(current);
 
-/* project */
+/* ======================
+   PROJECT CARDS
+====================== */
 document.querySelectorAll('.project-card').forEach(card => {
   const btn = card.querySelector('.project-toggle');
 
@@ -190,7 +183,6 @@ document.querySelectorAll('.project-card').forEach(card => {
     card.classList.toggle('active');
   });
 });
-
 
 /* ======================
    BURGER MENU
@@ -225,84 +217,133 @@ burger?.addEventListener('click', () => {
 overlay?.addEventListener('click', closeMenu);
 
 /* ======================
-   INFRA CENTER SLIDER (LOOP)
+   INFRA CAROUSEL (MOBILE ONLY)
 ====================== */
 
-const infraTrack = document.querySelector('.infra-track');
+let infraCarousel = null;
 
-if (infraTrack && window.innerWidth <= 600) {
+function initInfraCarousel() {
+  const infraTrack = document.querySelector('.infra-track');
+  const infraWrapper = document.querySelector('.infra-wrapper');
+  
+  if (!infraTrack || !infraWrapper) return;
 
-  let cards = Array.from(document.querySelectorAll('.infra-card'));
-
-  // 🔁 клонируем первый и последний для бесконечного эффекта
-  const firstClone = cards[0].cloneNode(true);
-  const lastClone = cards[cards.length - 1].cloneNode(true);
-
-  infraTrack.appendChild(firstClone);
-  infraTrack.insertBefore(lastClone, cards[0]);
-
-  cards = document.querySelectorAll('.infra-card');
-
-  let currentIndex = 1; // старт с первой "реальной"
-  let isAnimating = false;
-
-  function updateSlider(animate = true) {
-    const cardWidth = cards[0].offsetWidth + 20;
-
-    if (!animate) {
-      infraTrack.style.transition = 'none';
-    } else {
-      infraTrack.style.transition = 'transform 0.4s ease';
-    }
-
-    infraTrack.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
-
-    // active класс
-    cards.forEach(c => c.classList.remove('active'));
-    cards[currentIndex].classList.add('active');
+  // Очищаем предыдущую версию
+  if (infraCarousel && infraCarousel.originalHTML) {
+    infraTrack.innerHTML = infraCarousel.originalHTML;
+    infraTrack.style.transform = '';
+    infraTrack.style.transition = '';
   }
 
-  // swipe
-  let startX = 0;
-  let currentX = 0;
+  let cards = Array.from(document.querySelectorAll('.infra-card'));
+  
+  if (cards.length === 0) return;
 
-  infraTrack.addEventListener('touchstart', (e) => {
-    startX = e.touches[0].clientX;
-  });
+  // Сохраняем оригинальный HTML
+  infraCarousel = {
+    originalHTML: infraTrack.innerHTML
+  };
 
-  infraTrack.addEventListener('touchmove', (e) => {
-    currentX = e.touches[0].clientX;
-  });
+  // Инициализируем ТОЛЬКО для мобильных (<= 600px)
+  if (window.innerWidth <= 600) {
+    // 🔁 Клонируем для бесконечной карусели
+    const firstClone = cards[0].cloneNode(true);
+    const lastClone = cards[cards.length - 1].cloneNode(true);
 
-  infraTrack.addEventListener('touchend', () => {
-    const diff = startX - currentX;
+    infraTrack.appendChild(firstClone);
+    infraTrack.insertBefore(lastClone, cards[0]);
 
-    if (Math.abs(diff) < 40) return;
+    // Обновляем список карточек
+    cards = document.querySelectorAll('.infra-card');
+    
+    let currentIndex = 1; // старт с первой "реальной"
 
-    if (diff > 0) {
-      currentIndex++;
-    } else {
-      currentIndex--;
+    function updateCarousel(animate = true) {
+      const wrapperWidth = infraWrapper.offsetWidth;
+      const cardWidth = wrapperWidth * 0.75; // 75% ширина карточки
+      const margin = wrapperWidth * 0.125; // 12.5% margin с каждой стороны
+      
+      if (!animate) {
+        infraTrack.style.transition = 'none';
+      } else {
+        infraTrack.style.transition = 'transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+      }
+
+      // Сдвигаем трек так, чтобы активная карточка была по центру
+      const offset = (currentIndex * cardWidth) + (currentIndex * margin * 2);
+      infraTrack.style.transform = `translateX(-${offset}px)`;
+
+      // active класс
+      cards.forEach(c => c.classList.remove('active'));
+      if (cards[currentIndex]) {
+        cards[currentIndex].classList.add('active');
+      }
     }
 
-    updateSlider(true);
+    // Swipe обработка
+    let startX = 0;
+    let currentX = 0;
+    let isDragging = false;
 
-    // 🔁 loop фиксация
-    setTimeout(() => {
-      if (currentIndex === cards.length - 1) {
-        currentIndex = 1;
-        updateSlider(false);
+    infraTrack.addEventListener('touchstart', (e) => {
+      startX = e.touches[0].clientX;
+      isDragging = true;
+    }, {passive: true});
+
+    infraTrack.addEventListener('touchmove', (e) => {
+      if (!isDragging) return;
+      currentX = e.touches[0].clientX;
+    }, {passive: true});
+
+    infraTrack.addEventListener('touchend', () => {
+      if (!isDragging) return;
+      
+      const diff = startX - currentX;
+
+      if (Math.abs(diff) > 50) {
+        if (diff > 0) {
+          currentIndex++;
+        } else {
+          currentIndex--;
+        }
+
+        updateCarousel(true);
+
+        // 🔁 Бесконечная карусель
+        setTimeout(() => {
+          if (currentIndex === cards.length - 1) {
+            currentIndex = 1;
+            updateCarousel(false);
+          }
+
+          if (currentIndex === 0) {
+            currentIndex = cards.length - 2;
+            updateCarousel(false);
+          }
+        }, 500);
       }
 
-      if (currentIndex === 0) {
-        currentIndex = cards.length - 2;
-        updateSlider(false);
-      }
-    }, 400);
-  });
+      isDragging = false;
+    });
 
-  // init
-  updateSlider(false);
+    // Init
+    updateCarousel(false);
 
-  window.addEventListener('resize', () => updateSlider(false));
+    // Сохраняем данные для очистки
+    infraCarousel.currentIndex = currentIndex;
+    infraCarousel.cards = cards;
+    infraCarousel.updateCarousel = updateCarousel;
+  }
 }
+
+// Инициализация при загрузке
+document.addEventListener('DOMContentLoaded', initInfraCarousel);
+
+// Перезапуск при изменении размера окна
+let resizeTimer;
+window.addEventListener('resize', () => {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(() => {
+    initInfraCarousel();
+  }, 250);
+});
