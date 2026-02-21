@@ -1097,6 +1097,21 @@ nav a:hover {
 }
 
 @media (max-width: 600px) {
+
+    /* Invisible left/right tap zones to navigate infra carousel on mobile */
+    .infra-wrapper { position: relative; }
+    .infra-nav-left, .infra-nav-right {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 18%;
+        z-index: 3;
+        background: transparent;
+        touch-action: manipulation;
+    }
+    .infra-nav-left { left: 0; }
+    .infra-nav-right { right: 0; }
+
     section {
         padding: 60px 0 !important;
     }
