@@ -216,6 +216,7 @@ burger?.addEventListener('click', () => {
 
 overlay?.addEventListener('click', closeMenu);
 
+
 /* ======================
    INFRA CAROUSEL (MOBILE ONLY)
 ====================== */
@@ -225,79 +226,127 @@ let infraCarousel = null;
 function initInfraCarousel() {
   const infraTrack = document.querySelector('.infra-track');
   const infraWrapper = document.querySelector('.infra-wrapper');
-  
+
   if (!infraTrack || !infraWrapper) return;
 
-  // Очищаем предыдущую версию
+  // reset если resize
   if (infraCarousel && infraCarousel.originalHTML) {
     infraTrack.innerHTML = infraCarousel.originalHTML;
     infraTrack.style.transform = '';
     infraTrack.style.transition = '';
   }
 
-  let cards = Array.from(document.querySelectorAll('.infra-card'));
-  
+  let cards = Array.from(infraTrack.querySelectorAll('.infra-card'));
   if (cards.length === 0) return;
 
-  // Сохраняем оригинальный HTML
   infraCarousel = {
     originalHTML: infraTrack.innerHTML
   };
 
-  // Инициализируем ТОЛЬКО для мобильных (<= 600px)
   if (window.innerWidth <= 600) {
-    // 🔁 Клонируем для бесконечной карусели
+
+    // clones
     const firstClone = cards[0].cloneNode(true);
     const lastClone = cards[cards.length - 1].cloneNode(true);
 
     infraTrack.appendChild(firstClone);
     infraTrack.insertBefore(lastClone, cards[0]);
 
-    // Обновляем список карточек
-    cards = document.querySelectorAll('.infra-card');
-    
-    let currentIndex = 1; // старт с первой "реальной"
+    cards = Array.from(infraTrack.querySelectorAll('.infra-card'));
+
+    let currentIndex = 1;
+    let isAnimating = false;
+
+    // зоны
+    let leftZone = infraWrapper.querySelector('.infra-nav-left');
+    let rightZone = infraWrapper.querySelector('.infra-nav-right');
+
+    if (!leftZone) {
+      leftZone = document.createElement('div');
+      leftZone.className = 'infra-nav-left';
+      infraWrapper.appendChild(leftZone);
+    }
+
+    if (!rightZone) {
+      rightZone = document.createElement('div');
+      rightZone.className = 'infra-nav-right';
+      infraWrapper.appendChild(rightZone);
+    }
 
     function updateCarousel(animate = true) {
-      const wrapperWidth = infraWrapper.offsetWidth;
-      const cardWidth = wrapperWidth * 0.75; // 75% ширина карточки
-      const margin = wrapperWidth * 0.125; // 12.5% margin с каждой стороны
-      
-      if (!animate) {
-        infraTrack.style.transition = 'none';
-      } else {
-        infraTrack.style.transition = 'transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
-      }
+      const target = cards[currentIndex];
+      if (!target) return;
 
-      // Сдвигаем трек так, чтобы активная карточка была по центру
-      const offset = (currentIndex * cardWidth) + (currentIndex * margin * 2);
+      const wrapperWidth = infraWrapper.offsetWidth;
+      const offset = target.offsetLeft - (wrapperWidth - target.offsetWidth) / 2;
+
+      infraTrack.style.transition = animate
+        ? 'transform 0.4s ease'
+        : 'none';
+
       infraTrack.style.transform = `translateX(-${offset}px)`;
 
-      // active класс
       cards.forEach(c => c.classList.remove('active'));
-      if (cards[currentIndex]) {
-        cards[currentIndex].classList.add('active');
+      target.classList.add('active');
+
+      if (animate) {
+        isAnimating = true;
+
+        setTimeout(() => {
+          isAnimating = false;
+
+          // loop фикс
+          if (currentIndex === cards.length - 1) {
+            currentIndex = 1;
+            updateCarousel(false);
+          }
+
+          if (currentIndex === 0) {
+            currentIndex = cards.length - 2;
+            updateCarousel(false);
+          }
+
+        }, 400);
       }
     }
 
-    // Swipe обработка
+    // 👉 КЛИК (ТОЛЬКО click, без touchend)
+    leftZone.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (isAnimating) return;
+
+      currentIndex--;
+      updateCarousel(true);
+    });
+
+    rightZone.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (isAnimating) return;
+
+      currentIndex++;
+      updateCarousel(true);
+    });
+
+    // 👉 СВАЙП
     let startX = 0;
     let currentX = 0;
     let isDragging = false;
 
     infraTrack.addEventListener('touchstart', (e) => {
+      if (isAnimating) return;
+
       startX = e.touches[0].clientX;
       isDragging = true;
-    }, {passive: true});
+    }, { passive: true });
 
     infraTrack.addEventListener('touchmove', (e) => {
       if (!isDragging) return;
       currentX = e.touches[0].clientX;
-    }, {passive: true});
+    }, { passive: true });
 
     infraTrack.addEventListener('touchend', () => {
-      if (!isDragging) return;
-      
+      if (!isDragging || isAnimating) return;
+
       const diff = startX - currentX;
 
       if (Math.abs(diff) > 50) {
@@ -308,38 +357,18 @@ function initInfraCarousel() {
         }
 
         updateCarousel(true);
-
-        // 🔁 Бесконечная карусель
-        setTimeout(() => {
-          if (currentIndex === cards.length - 1) {
-            currentIndex = 1;
-            updateCarousel(false);
-          }
-
-          if (currentIndex === 0) {
-            currentIndex = cards.length - 2;
-            updateCarousel(false);
-          }
-        }, 500);
       }
 
       isDragging = false;
+      startX = currentX = 0;
     });
 
-    // Init
     updateCarousel(false);
-
-    // Сохраняем данные для очистки
-    infraCarousel.currentIndex = currentIndex;
-    infraCarousel.cards = cards;
-    infraCarousel.updateCarousel = updateCarousel;
   }
 }
 
-// Инициализация при загрузке
 document.addEventListener('DOMContentLoaded', initInfraCarousel);
 
-// Перезапуск при изменении размера окна
 let resizeTimer;
 window.addEventListener('resize', () => {
   clearTimeout(resizeTimer);
